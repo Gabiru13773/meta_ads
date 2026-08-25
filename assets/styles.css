@@ -1,0 +1,373 @@
+/* BONATI — Checklist Meta Ads · estilos de aplicação */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+a { color: var(--wine-600); text-underline-offset: 3px; }
+a:hover { color: var(--gold-500); }
+
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+
+/* ---------- Cabeçalho ---------- */
+
+.masthead {
+  background: var(--wine-700);
+  background-image: radial-gradient(120% 90% at 78% 8%, var(--wine-600) 0%, var(--wine-800) 62%);
+  color: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+.masthead::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-400) 22%, var(--gold-200) 50%, var(--gold-400) 78%, transparent);
+}
+.masthead .wrap { padding-top: 34px; padding-bottom: 34px; }
+
+.brandline { display: flex; align-items: center; gap: 16px; }
+.brandline img { width: 62px; height: 62px; display: block; }
+.brandline .name {
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+  color: var(--gold-300);
+  line-height: 1.1;
+}
+.brandline .tag {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  color: rgba(239, 212, 163, 0.72);
+}
+
+.masthead h1 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(34px, 6.2vw, 60px);
+  line-height: 1.04;
+  margin: 28px 0 0 0;
+  color: var(--cream);
+}
+.masthead h1 em { font-style: italic; color: var(--gold-300); }
+.masthead .deck {
+  max-width: 60ch;
+  margin: 16px 0 0 0;
+  color: rgba(251, 247, 243, 0.78);
+  font-size: 17px;
+}
+.masthead .stamp {
+  margin-top: 22px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(239, 212, 163, 0.6);
+}
+
+/* ---------- Painel de progresso ---------- */
+
+.progress {
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  margin: -46px auto 0 auto;
+  padding: 22px;
+  display: grid;
+  grid-template-columns: 118px 1fr;
+  gap: 22px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+.dial { width: 118px; height: 118px; }
+.dial-track { fill: none; stroke: var(--cream-dim); stroke-width: 5; }
+.dial-arc {
+  fill: none;
+  stroke: url(#goldgrad);
+  stroke-width: 5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 520ms cubic-bezier(.22,.61,.36,1);
+}
+.dial-num {
+  font-family: var(--font-display);
+  font-size: 30px;
+  fill: var(--wine-700);
+}
+.dial-den { font-family: var(--font-body); font-size: 11px; fill: var(--ink-soft); letter-spacing: 0.12em; }
+
+.progress h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 24px;
+  margin: 0 0 4px 0;
+  color: var(--wine-700);
+}
+.progress .phaseline { font-size: 14px; color: var(--ink-soft); margin: 0; }
+.ticks { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 14px; }
+.ticks i { width: 12px; height: 5px; background: var(--cream-dim); border-radius: 1px; transition: background 220ms; }
+.ticks i.on { background: var(--gold-400); }
+
+/* ---------- Controles ---------- */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin: 26px 0 0 0;
+}
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  user-select: none;
+}
+.btn {
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 10px 18px;
+  border: 1px solid var(--line-gold);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--wine-700);
+  cursor: pointer;
+  transition: background 180ms, color 180ms, border-color 180ms;
+}
+.btn:hover { background: var(--wine-700); border-color: var(--wine-700); color: var(--gold-200); }
+.btn-quiet { color: var(--ink-soft); border-color: var(--line); }
+.btn-quiet:hover { background: var(--cream-dim); color: var(--wine-700); border-color: var(--line); }
+
+/* ---------- Caixa de relatório ---------- */
+
+.reportbox { margin-top: 18px; display: none; }
+.reportbox.open { display: block; }
+.reportbox textarea {
+  width: 100%;
+  height: 260px;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  resize: vertical;
+}
+.reportbox .btn { margin-top: 10px; }
+
+/* ---------- Fases ---------- */
+
+.phase { margin-top: 46px; }
+
+.phase-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line-gold);
+}
+.folio {
+  font-family: var(--font-display);
+  font-size: 46px;
+  font-weight: 300;
+  line-height: 0.8;
+  color: var(--gold-400);
+  min-width: 42px;
+}
+.phase-head h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(22px, 3.4vw, 30px);
+  letter-spacing: 0.01em;
+  margin: 0;
+  flex: 1;
+  color: var(--wine-700);
+}
+.tally {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.phase.done .folio { color: var(--wine-700); }
+.phase.done .tally { color: var(--gold-500); }
+
+.lede {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-style: italic;
+  color: var(--ink-soft);
+  max-width: 66ch;
+  margin: 16px 0 6px 0;
+}
+
+.items { list-style: none; margin: 8px 0 0 0; padding: 0; }
+.items li { border-bottom: 1px solid var(--line); }
+.items li.hidden { display: none; }
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 15px 4px;
+  cursor: pointer;
+}
+.item input { position: absolute; opacity: 0; width: 0; height: 0; }
+.box {
+  flex: none;
+  width: 21px;
+  height: 21px;
+  margin-top: 2px;
+  border: 1px solid var(--line-gold);
+  border-radius: var(--radius);
+  background: #fff;
+  display: grid;
+  place-items: center;
+  transition: background 180ms, border-color 180ms;
+}
+.box svg { width: 13px; height: 13px; opacity: 0; transform: scale(.7); transition: opacity 180ms, transform 180ms; }
+.item input:checked ~ .box { background: var(--wine-700); border-color: var(--wine-700); }
+.item input:checked ~ .box svg { opacity: 1; transform: scale(1); }
+.item input:focus-visible ~ .box { outline: 2px solid var(--gold-400); outline-offset: 2px; }
+.item .txt { font-size: 16.5px; }
+li.on .item .txt { color: var(--ink-soft); }
+.item .txt a { display: inline-block; margin-left: 2px; font-size: 14px; }
+.who-badge {
+  font-size: 12px;
+  color: var(--gold-500);
+  font-style: italic;
+  margin-left: 4px;
+}
+
+.syncstatus {
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  color: var(--ink-soft);
+  margin-left: auto;
+  padding: 4px 0;
+}
+.syncstatus.ok::before { content: "● "; color: #3c8a55; }
+.syncstatus.pending::before { content: "● "; color: var(--gold-400); }
+.syncstatus.error { color: #a33636; }
+.syncstatus.error::before { content: "● "; color: #a33636; }
+
+details { margin: -4px 0 14px 39px; }
+summary {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-500);
+  cursor: pointer;
+  list-style: none;
+}
+summary::-webkit-details-marker { display: none; }
+summary::before { content: "+ "; }
+details[open] summary::before { content: "– "; }
+details p {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--ink-soft);
+  max-width: 64ch;
+  margin: 8px 0 0 0;
+  padding-left: 14px;
+  border-left: 1px solid var(--line-gold);
+}
+
+/* ---------- Blocos de referência ---------- */
+
+.pull {
+  font-family: var(--font-display);
+  font-size: clamp(21px, 3.2vw, 27px);
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--wine-700);
+  max-width: 40ch;
+  margin: 58px auto;
+  text-align: center;
+}
+.pull::before, .pull::after {
+  content: "";
+  display: block;
+  width: 54px;
+  height: 1px;
+  background: var(--gold-400);
+  margin: 0 auto 22px auto;
+}
+.pull::after { margin: 22px auto 0 auto; }
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 26px;
+  margin-top: 30px;
+  background: #fff;
+}
+.card.deep {
+  background: var(--wine-700);
+  background-image: radial-gradient(120% 90% at 80% 0%, var(--wine-600), var(--wine-800));
+  border-color: var(--wine-800);
+  color: rgba(251, 247, 243, 0.86);
+}
+.card h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 26px;
+  margin: 0 0 14px 0;
+  color: var(--wine-700);
+}
+.card.deep h3 { color: var(--gold-300); }
+.card.deep a { color: var(--gold-300); }
+.card ul, .card ol { margin: 0; padding-left: 20px; }
+.card li { margin-bottom: 9px; }
+.card li::marker { color: var(--gold-500); }
+
+footer {
+  margin-top: 64px;
+  border-top: 1px solid var(--line-gold);
+  padding: 26px 0 60px 0;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+footer strong { font-family: var(--font-display); font-size: 15px; letter-spacing: var(--tracking-display); text-transform: uppercase; color: var(--wine-700); }
+
+/* ---------- Responsivo ---------- */
+
+@media (max-width: 620px) {
+  .progress { grid-template-columns: 1fr; justify-items: start; margin-top: -34px; }
+  .folio { font-size: 34px; min-width: 30px; }
+  .masthead .wrap { padding-top: 26px; padding-bottom: 44px; }
+}
+
+/* ---------- Impressão ---------- */
+
+@media print {
+  .controls, .reportbox, .btn { display: none !important; }
+  body { background: #fff; }
+  .masthead { background: #fff !important; color: var(--ink); }
+  .masthead h1, .masthead .deck, .brandline .name { color: var(--wine-700); }
+  .progress { box-shadow: none; margin-top: 20px; }
+  .items li.hidden { display: block !important; }
+  details { display: none; }
+  a[href]::after { content: ""; }
+}
